@@ -3,5 +3,6 @@
 
 void main()
 {	
+	int subjects[3] , grades[3];
 	
 }

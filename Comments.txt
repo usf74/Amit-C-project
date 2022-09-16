@@ -1,0 +1,14 @@
+delete entry function would most likely require not using a stack; 34an hnms7 7aga f west el db
+so a db with max size? hmmmm. what about a linked list? in an array. instead of making a nxt entry in the struct of the list.
+No lazm hn3ml el next. 34an lw 3mlna delete l 7aga fl nos el denya htbooz
+
+7araket el void fl func args means en el db htb2a met3arafa f file m3 el funcs bta3tha
+
+notice that pointers in args mean hn3ml return l aktr men value 34an kda pointer
+
+in add entry, subjects and grades are pointers to multiple vals; which probably means they are an array to be passed to func. 
+leh mn3ml4 pass l struct 3latool?
+
+
+these observations indicate that its neither a linked list or stack but a hybrid
+make a ui by a while loop
