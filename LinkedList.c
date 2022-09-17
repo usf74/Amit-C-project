@@ -1,5 +1,4 @@
 #include "LinkedList.h"
-//node sdb[10];
 node* hp;
 void SDB_init(void)  //done
 {

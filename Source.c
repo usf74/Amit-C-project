@@ -1,10 +1,10 @@
-#include "PrintLib.h"
+#include "ui.h"
 int main()
 {
-	uint8 c;
+	uint8 c,count,  list[11];;
 	while (1)
 	{
-		printf("Enter desired operation\n1 - Add entry\n2 - Read entry\n3 - Delete entry\n4 - Get ID list\n5 - Get list size\n6 - Does ID exist\n7 - Is list full\n");
+		printf("\nEnter desired operation\n1 - Add entry\n2 - Read entry\n3 - Delete entry\n4 - Get ID list\n5 - Get list size\n6 - Does ID exist\n7 - Is list full\n");
 		scanf("%d", &c); fflush(stdin);
 		switch (c)
 		{
@@ -21,7 +21,7 @@ int main()
 			del();
 			break;
 		case 4:
-			uint8  count,  list[11];
+			SDB_getidlist(&count, list);
 			printidlist(list,&count);
 			break;
 		case 5:
@@ -29,7 +29,7 @@ int main()
 			break;
 		case 6:
 			printf("Enter ID\n");
-			scanf("%d", &id);
+			scanf("%d", &id); fflush(stdin);
 			printidexist(id);
 			break;
 		case 7:
