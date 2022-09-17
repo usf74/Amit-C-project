@@ -75,7 +75,7 @@ void add(void)
     scanf("%d", &year); fflush(stdin);
     for (uint8 i = 0;i < 3;i++)
     {
-        printf("Enter subject ID %d\n", i);
+        printf("Enter subject ID %d\n", i+1);
         scanf("%d", &subjects[i]); fflush(stdin);
         printf("Enter grade\n");
         scanf("%d", &grades[i]); fflush(stdin);
