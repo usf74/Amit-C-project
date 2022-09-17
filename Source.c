@@ -3,6 +3,7 @@
 
 void main()
 {	
-	int subjects[3] , grades[3];
+	SDB_init();
+	uint8 subjects[3] , grades[3];
 	
 }

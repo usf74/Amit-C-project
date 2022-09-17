@@ -1,8 +1,9 @@
-#define NULL (void*)0
+//#define NULL (void*)0
 #include <stdlib.h>
+typedef unsigned char uint8;
 typedef struct 
 {
-	int id,year,c1id,c1g,c2id,c2g,c3id,c3g;
+	uint8 id,year,subjects[3],grades[3];
 }entry;
 typedef struct node
 {
