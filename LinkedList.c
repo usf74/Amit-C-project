@@ -1,69 +1,82 @@
 #include "LinkedList.h"
 //node sdb[10];
 node* hp;
-void SDB_init(void)
+void SDB_init(void)  //done
 {
-    hp = (node*)malloc(nodesize);
-    hp->nxt = NULL;  // NULL to indicate no elements at all
+    hp = NULL;  // NULL to indicate no elements at all
     return;
 }
-node* SDB_getidaddress(uint8 id)
+node* SDB_getidaddress(uint8 id)   //done
 {
+    if (hp == NULL)
+        return NULL;
     node* ptr = hp;
-    uint8 i = 0;
-    do
+    while(1)
     {
         if ((ptr->value.id == id))
             return ptr;
+        if (ptr->nxt == NULL)
+            break;
         ptr = ptr->nxt;
-        i++;
-    } while (ptr->nxt != NULL);
+    }
     return(NULL); //can't find entry
 }
 //Required functions
 uint8 SDB_getusedsize(void)
 {
     node* ptr = hp;
-    if (ptr->nxt == NULL)   // for no entries case
+    if (hp == NULL)   // for no entries case
         return 0;
-    uint8 count = 0;    // array indexing style
+    uint8 count = 1;
     while (ptr->nxt != NULL)
     {
         count++;
         ptr = ptr->nxt;
     }
-    count++;
-    return count; //return normal index
+    return count;
 }
-uint8 SDB_isidexist(uint8 id)
+uint8 SDB_isidexist(uint8 id)  //done
 {
     node* ptr = hp;
-    for (uint8 i = 0; ptr->nxt != NULL; i++)
+    if (hp == NULL)  //List is empty
+        return 0;
+    while (1)
     {
-        if ((ptr->value.id) == id)
+        if ((ptr->value.id == id))
             return 1;
+        if (ptr->nxt == NULL)
+            break;
         ptr = ptr->nxt;
     }
-    return 0;
+    return(0); //can't find entry
 }
-uint8 SDB_isfull(void)
+uint8 SDB_isfull(void) //done
 {
     if (SDB_getusedsize() == 10)
         return 1;
     return 0;
 }
-void SDB_getidlist(uint8* count, uint8* list)
+void SDB_getidlist(uint8* count, uint8* list)   //done
 {
+    *count = 0;
+    if (hp == NULL)  //no entry case
+        return;
     node* ptr = hp;
-    for (*count = 0; ptr->nxt != NULL; (*count)++)
+    while(1)
     {
         list[*count] = ptr->value.id;
         ptr = ptr->nxt;
+        ++* count;
+        if (ptr->nxt == NULL)
+        {
+            list[*count] = ptr->value.id;
+            break;
+        }
     }
-    (*count)++;
+    list[++*count]=0; // a number to mark end of list for printing 
     return;
 }
-uint8 SDB_readentry(uint8 id, short* year, uint8* subjects, uint8* grades)
+uint8 SDB_readentry(uint8 id, short* year, uint8* subjects, uint8* grades)//done
 {
     node* ptr = SDB_getidaddress(id);
 
@@ -78,22 +91,30 @@ uint8 SDB_readentry(uint8 id, short* year, uint8* subjects, uint8* grades)
     }
     return 1;
 }
-uint8 SDB_addentry(uint8 id, short year, uint8* subjects, uint8* grades)
+uint8 SDB_addentry(uint8 id, short year, uint8* subjects, uint8* grades)//done
 {
     if (SDB_getusedsize() == 10)
         return 0;
     node* ptr;
-    for (ptr = hp; ptr->nxt != NULL; ptr = ptr->nxt);
-    ptr->nxt = (node*)malloc(nodesize);
-    if (ptr->nxt == NULL)
-        return 0;
-
-    if (hp != ptr)
+    if (hp == NULL)
+    {
+        hp = (node*)malloc(nodesize);
+        if (hp == NULL)  //malloc failed
+            return 0;
+        ptr = hp;
+    }
+    else
+    {
+        for (ptr = hp; ptr->nxt != NULL; ptr = ptr->nxt);
+        ptr->nxt = (node*)malloc(nodesize);
+        if (ptr->nxt == NULL)  //malloc failed
+            return 0;
         ptr = ptr->nxt;
-    ptr->nxt = NULL;
+    }
 
     ptr->value.id = id;
     ptr->value.year = year;
+    ptr->nxt = NULL;
     for (uint8 i = 0; i < 3; i++)
     {
         ptr->value.subjects[i] = subjects[i];
@@ -101,7 +122,7 @@ uint8 SDB_addentry(uint8 id, short year, uint8* subjects, uint8* grades)
     }
     return 1;
 }
-void SDB_DeleteEntry(uint8 id)
+void SDB_DeleteEntry(uint8 id)//done
 {
     node* ptr;
     ptr = SDB_getidaddress(id);
@@ -128,9 +149,14 @@ void SDB_DeleteEntry(uint8 id)
         free(ptr);
     }
 }
-void printIDentry(uint8 id)
+void printIDentry(uint8 id)//done
 {
     node* ptr = SDB_getidaddress(id);
+    if (ptr == NULL)
+    {
+        printf("Error cant find entry");
+        return;
+    }
     printf("Student ID: %d\n", ptr->value.id);
     printf("Student year: %d", ptr->value.year);
     for (uint8 i = 0;i < 3;i++)
